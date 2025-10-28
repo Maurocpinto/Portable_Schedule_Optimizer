@@ -25,7 +25,7 @@ def insert_initial_data():
         # --- 2. COMPETENCIES (Competências) ---
         competencies_data = [
             (1, 'OSKOSH'),
-            (2, 'ROSENBOWER'),
+            (2, 'ROSENBAUER'),
             (3, 'COMMAND'),
             (4, 'EXTRICATION')
         ]
@@ -34,41 +34,43 @@ def insert_initial_data():
 
         # --- 3. VEHICLES (Viaturas) ---
         vehicles_data = [
-            (1, 'VTR-01', '3-seater (1 TL, 2 OP)'),
-            (2, 'VTR-02', '3-seater (1 TL, 2 OP)'),
-            (3, 'VTR-03', '3-seater (1 TL, 2 OP)'),
-            (4, 'VTR-CT', '1-seater (1 CS/OP)'),  # Viatura de 1 lugar (Chefe de Turno/Operador)
-            (5, 'VTR-CE', '2-seater (1 TL, 1 OP)')
+            (1, '01', 'COMMAND'),
+            (2, '02', 'OSKOSH'),
+            (3, '03', 'OSKOSH'),
+            (4, '04', 'OSKOSH'),
+            (5, '05', 'OSKOSH'),
+            (6, '06', 'ROSENBAUER'),
+            (7, '07', 'EXTRICATION')
         ]
         cursor.executemany("INSERT OR REPLACE INTO Vehicles (vehicle_id, denomination, description) VALUES (?, ?, ?)",
                            vehicles_data)
 
-        # --- 4. VEHICLE COMPOSITION (Composição da Tripulação - 9 Vagas) ---
-        # Data: (Vehicle ID, Role ID, Quantity)
-        role_id_op = 1
-        role_id_tl = 2
-        role_id_cs = 3
-
         composition_data = [
             # VTR 1, 2, 3 (Total 3 Lugares: 1 TL, 2 OP)
-            (1, role_id_tl, 1),
-            (1, role_id_op, 2),
-            (2, role_id_tl, 1),
-            (2, role_id_op, 2),
-            (3, role_id_tl, 1),
-            (3, role_id_op, 2),
-
-            # VTR 4 (Total 1 Lugar: 1 CS/OP)
-            (4, role_id_cs, 1),
-
-            # VTR 5 (Total 2 Lugares: 1 TL, 1 OP)
-            (5, role_id_tl, 1),
-            (5, role_id_op, 1),
+            (1, 4),
+            (1, 2),
+            (2, 1),
+            (2, 2),
+            (2, 3),
+            (3, 1),
+            (3, 2),
+            (3, 3),
+            (4, 1),
+            (4, 2),
+            (4, 3),
+            (5, 1),
+            (5, 2),
+            (5, 3),
+            (6, 1),
+            (6, 2),
+            (6, 3),
+            (7, 2),
+            (7, 3)
         ]
 
         # Clear existing composition data to prevent duplicates on re-run
         cursor.execute("DELETE FROM Vehicle_Composition")
-        cursor.executemany("INSERT INTO Vehicle_Composition (vehicle_id, role_id, quantity) VALUES (?, ?, ?)",
+        cursor.executemany("INSERT INTO Vehicle_Composition (vehicle_id, role_id) VALUES (?, ?)",
                            composition_data)
 
         # --- 5. SHIFTS (Turnos) ---
